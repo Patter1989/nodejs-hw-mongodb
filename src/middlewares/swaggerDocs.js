@@ -7,9 +7,14 @@ import { SWAGGER_PATH } from '../constants/index.js';
 export const swaggerDocs = () => {
   try {
     const swaggerDoc = JSON.parse(fs.readFileSync(SWAGGER_PATH).toString());
-    return [...swaggerUI.serve, swaggerUI.setup(swaggerDoc)];
+    return (req, res, next) => {
+      swaggerUI.serve(req, res, () => {
+        swaggerUI.setup(swaggerDoc)(req, res, next);
+      });
+    };
   } catch (err) {
-    return (req, res, next) =>
+    return (req, res, next) => {
       next(createHttpError(500, "Can't load swagger docs"));
+    };
   }
 };

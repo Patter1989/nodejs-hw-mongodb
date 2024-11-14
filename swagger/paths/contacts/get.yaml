@@ -32,7 +32,7 @@ parameters:
     example: 'age'
     description: 'Field by which to sort the contacts. Default value is _id.'
   - in: query
-    name: contactType
+    name: type
     schema:
       type: string
       enum: ['work', 'personal', 'home']
